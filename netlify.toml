@@ -1,10 +1,6 @@
-# Static site — HTML/CSS/JS at repo root. No build step.
-# Docs: https://docs.netlify.com/build/configure-builds/file-based-configuration/
+# Static site at repo root — no framework build.
+# https://docs.netlify.com/build/configure-builds/file-based-configuration/
 
 [build]
   publish = "."
-  # Intentionally no `command` — nothing to compile.
-
-# Optional: skip dependency installs we don't need
-[build.environment]
-  NETLIFY_SKIP_DEPENDENCY_SCAN = "true"
+  # No `command` — Netlify deploys index.html / assets as-is.
