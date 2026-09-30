@@ -19,6 +19,9 @@ Interactive twin also lives in Cursor as
 ## Method
 
 - **Unit:** pair total (A + B votes in one matchup)
+- **Winner share:** `100 × winner ÷ pair` (50% = coin flip)
+- **Margin % of pair:** `100 × |A − B| ÷ pair`
+- **Adult median:** median margin % across adult-bracket matchups that year (excludes Fat Bear Jr.)
 - **Same-day gap:** max pair − min pair
 - **Vs opener:** `100 × (day avg ÷ opening-day avg)`
 - **YoY:** `100 × (this year stage ÷ prior year same stage)`

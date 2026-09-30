@@ -52,8 +52,20 @@ const GAPS = {
 const FINALS_YEARS = ["2022", "2023", "2024", "2025", "2026"];
 const FINALS_MARGINS = [11229, 85187, 40780, 32625, 5081];
 const FINALS_MARGIN_PCT = [9.0, 64.8, 40.1, 20.4, 2.5];
+/** Winner votes ÷ pair total — 50% = coin flip */
+const FINALS_WINNER_PCT = [54.5, 82.4, 70.0, 60.2, 51.3];
+/** Median margin % of pair across adult-bracket matchups that year */
+const ADULT_MEDIAN_MARGIN_PCT = [35.3, 64.8, 51.3, 40.4, 50.3];
 
-let charts = { opener: null, yoy: null, gaps: null, marginVotes: null, marginPct: null };
+let charts = {
+  opener: null,
+  yoy: null,
+  gaps: null,
+  marginVotes: null,
+  marginPct: null,
+  winnerPct: null,
+  adultMedian: null,
+};
 
 function guideLine(label, n) {
   return {
@@ -126,6 +138,35 @@ function marginOptions(yTitle) {
 function renderMargins() {
   const yearColors = FINALS_YEARS.map((y) => COLORS[y]);
 
+  charts.winnerPct = new Chart(document.getElementById("chartWinnerPct"), {
+    type: "bar",
+    data: {
+      labels: FINALS_YEARS,
+      datasets: [
+        {
+          label: "Winner share of pair",
+          data: FINALS_WINNER_PCT,
+          backgroundColor: yearColors,
+        },
+        {
+          type: "line",
+          label: "50% (coin flip)",
+          data: Array(FINALS_YEARS.length).fill(50),
+          borderColor: COLORS.guide,
+          borderWidth: 2,
+          borderDash: [6, 4],
+          pointRadius: 0,
+        },
+      ],
+    },
+    options: (() => {
+      const opts = baseOptions("% of finals pair (winner)");
+      opts.scales.y.min = 45;
+      opts.scales.y.max = 90;
+      return opts;
+    })(),
+  });
+
   charts.marginVotes = new Chart(document.getElementById("chartMarginVotes"), {
     type: "bar",
     data: {
@@ -154,6 +195,30 @@ function renderMargins() {
       ],
     },
     options: marginOptions("% of finals pair total"),
+  });
+
+  charts.adultMedian = new Chart(document.getElementById("chartAdultMedian"), {
+    type: "bar",
+    data: {
+      labels: FINALS_YEARS,
+      datasets: [
+        {
+          label: "Median adult margin %",
+          data: ADULT_MEDIAN_MARGIN_PCT,
+          backgroundColor: yearColors,
+        },
+        {
+          type: "line",
+          label: "10% (close race)",
+          data: Array(FINALS_YEARS.length).fill(10),
+          borderColor: COLORS.danger,
+          borderWidth: 2,
+          borderDash: [6, 4],
+          pointRadius: 0,
+        },
+      ],
+    },
+    options: baseOptions("Median margin % of pair (adult bracket)"),
   });
 }
 

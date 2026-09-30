@@ -146,6 +146,17 @@ const BACKPACK_IMG =
 const FINALS_YEARS = ["2022", "2023", "2024", "2025", "2026"] as const;
 const FINALS_MARGINS = [11229, 85187, 40780, 32625, 5081];
 const FINALS_MARGIN_PCT = [9.0, 64.8, 40.1, 20.4, 2.5];
+/** Winner votes ÷ pair total — 50% = coin flip */
+const FINALS_WINNER_PCT = [54.5, 82.4, 70.0, 60.2, 51.3];
+/** Median margin % of pair across adult-bracket matchups that year */
+const ADULT_MEDIAN_MARGIN_PCT = [35.3, 64.8, 51.3, 40.4, 50.3];
+const ADULT_CLOSE_COUNTS = [
+  { year: "2022", n: 11, under10: 2 },
+  { year: "2023", n: 11, under10: 0 },
+  { year: "2024", n: 11, under10: 1 },
+  { year: "2025", n: 11, under10: 0 },
+  { year: "2026", n: 15, under10: 3 },
+] as const;
 const FINALS_META = [
   { year: "2022", winner: "747", loser: "901", w: 68105, l: 56876 },
   { year: "2023", winner: "128 Grazer", loser: "32 Chunk", w: 108321, l: 23134 },
@@ -282,11 +293,27 @@ export default function FatBearWeekVoting() {
       <Divider />
 
       <Stack gap={8}>
-        <H2>Finals margins by year — winner vs loser</H2>
+        <H2>Champions week over week — who won, and by how much</H2>
         <Callout tone="info" title="What this shows">
-          Absolute vote gap (winner − loser) and that gap as % of the finals
-          pair total. Chronological: 2022 left → 2026 right.
+          Each Fat Bear Week champion’s share of the finals pair (winner ÷
+          total), then absolute margin and margin as % of pair. Chronological:
+          2022 left → 2026 right. Dashed line on the first chart is 50% — a
+          coin flip.
         </Callout>
+        <BarChart
+          categories={[...FINALS_YEARS]}
+          series={[
+            {
+              name: "Winner share of pair",
+              data: [...FINALS_WINNER_PCT],
+              tone: "success",
+            },
+          ]}
+          height={260}
+          valueSuffix="%"
+          showValues
+          referenceLines={[{ value: 50, label: "50% (coin flip)", tone: "neutral" }]}
+        />
         <Grid columns={2} gap={16}>
           <BarChart
             categories={[...FINALS_YEARS]}
@@ -322,13 +349,15 @@ export default function FatBearWeekVoting() {
             "Loser",
             "Loser votes",
             "Margin",
-            "% of pair",
+            "Margin % of pair",
+            "Winner share",
           ]}
           columnAlign={[
             "left",
             "left",
             "right",
             "left",
+            "right",
             "right",
             "right",
             "right",
@@ -341,26 +370,73 @@ export default function FatBearWeekVoting() {
             fmt(r.l),
             fmt(FINALS_MARGINS[i]),
             `${FINALS_MARGIN_PCT[i]}%`,
+            `${FINALS_WINNER_PCT[i]}%`,
           ])}
           striped
         />
         <Callout tone="warning" title="What’s anomalous">
           <Text>
-            <Text weight="semibold">2026 / Backpack</Text> is the clear
-            outlier on closeness: margin only 5,081 votes (2.5% of the
-            pair) — by far the thinnest final in this set. Next-closest is
-            2022 / 747 at ~9%.
+            Votes are <Text weight="semibold">not</Text> usually a coin flip.
+            Grazer took 82.4% of the 2023 finals pair and 70.0% in 2024. Chunk
+            won 2025 with 60.2%. Even “close” 2022 still gave 747 a 54.5% share
+            (9.0% margin).
           </Text>
           <Text>
-            <Text weight="semibold">2023 / Grazer</Text> is the opposite
-            outlier: a blowout (85,187 votes, ~65% of the pair) over Chunk.
-            2024 Grazer also wide (~40%). 2025 Chunk mid-pack (~20%).
+            <Text weight="semibold">2026 / Backpack</Text> is the clear
+            outlier: 51.3% share, margin only 5,081 (2.5% of pair) — thinnest
+            final in this set. Next-closest champion share is 2022 / 747 at
+            54.5%.
           </Text>
           <Text>
             A thin margin is suspicious-looking but not proof of fraud — it
             can just mean a competitive final. Still, 2026 sits alone at the
             bottom of the closeness scale.
           </Text>
+        </Callout>
+        <H3>Adult-bracket medians — typical races aren’t close either</H3>
+        <Callout tone="info" title="What this shows">
+          Median margin % across every adult-bracket matchup that year
+          (excludes Fat Bear Jr.). Dashed line = 10% “close race” flag. Every
+          year’s median sits well above 10% — blowouts are the norm.
+        </Callout>
+        <BarChart
+          categories={[...FINALS_YEARS]}
+          series={[
+            {
+              name: "Median adult margin % of pair",
+              data: [...ADULT_MEDIAN_MARGIN_PCT],
+              tone: "warning",
+            },
+          ]}
+          height={260}
+          valueSuffix="%"
+          showValues
+          referenceLines={[{ value: 10, label: "10% (close race)", tone: "danger" }]}
+        />
+        <Table
+          headers={[
+            "Year",
+            "Adult matchups",
+            "Median margin % of pair",
+            "Under 10% margin",
+          ]}
+          columnAlign={["left", "right", "right", "right"]}
+          rows={[
+            ...ADULT_CLOSE_COUNTS.map((r, i) => [
+              r.year,
+              String(r.n),
+              `${ADULT_MEDIAN_MARGIN_PCT[i]}%`,
+              String(r.under10),
+            ]),
+            ["All", "59", "~40–65% by year", "6 (10%)"],
+          ]}
+          striped
+        />
+        <Callout tone="info" title="How rare is close?">
+          Only <Text weight="semibold">6 of 59</Text> adult matchups
+          (2022–2026) finished under a 10% margin. Three of those six are in
+          2026 — including Backpack’s semi vs Bucky (2.7%) and the finals vs
+          910 (2.5%).
         </Callout>
         <Callout tone="danger" title="2022 spam vs 2026 margin — why a recount is warranted">
           <Text>
