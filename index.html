@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fat Bear Week — looking for vote fraud</title>
+    <title>Was Backpack’s Fat Bear Week win too close to trust?</title>
     <meta
       name="description"
-      content="Turnout and vote-integrity analysis for Fat Bear Week 2022–2026. Pair totals from explore.org / Wayback."
+      content="910 vs 89 Backpack finals were razor-thin. Historical Fat Bear Week turnout analysis — suspicion without proof from public tallies."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,62 +20,91 @@
   <body>
     <main class="canvas">
       <header class="stack-tight">
-        <h1>Fat Bear Week — looking for vote fraud</h1>
+        <figure class="hero-fig">
+          <img
+            src="https://media.explore.org/documents/89-1789765144853.png"
+            alt="89 Backpack, Fat Bear Week 2026 champion"
+            width="1200"
+            height="675"
+          />
+          <figcaption>
+            89 Backpack — Fat Bear Week 2026 champion. Photo:
+            <a href="https://media.explore.org/documents/89-1789765144853.png"
+              >explore.org media</a
+            >
+            ·
+            <a href="https://explore.org/fat-bear-week"
+              >Fat Bear Week on explore.org</a
+            >
+          </figcaption>
+        </figure>
+        <h1>Was Backpack’s win too close to trust?</h1>
         <p>
-          I started from a suspicion: looking at Fat Bear Week totals, something
-          felt off — turnout swinging hard midweek, then snapping back for
-          finals. That pattern made me wonder whether vote stuffing (or other
-          ballot issues) might be hiding in the numbers.
+          Fat Bear Week 2026 finals came down to <strong>910</strong> vs
+          <strong>89 Backpack</strong>: Backpack 103,334 — 910 98,253. Margin
+          only <strong>5,081 votes</strong> (~2.5% of the pair). That
+          razor-thin finish made me suspicious — specifically that something
+          might have been off in the voting to push Backpack over the line.
+          Official bracket and results:
+          <a href="https://explore.org/fat-bear-week"
+            >explore.org/fat-bear-week</a
+          >.
         </p>
         <p>
-          Digging in, I found organizers had already caught real fraud in 2022.
-          The
+          I pulled multi-year pair totals (Wayback + live Results tables),
+          looked at same-day gaps, turnout vs each year’s opener, and
+          year-over-year shapes. Organizers
           <a
             href="https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal"
-            >Guardian</a
+            >did catch real stuffing in 2022</a
           >
-          reported ~9,000 spam votes for 435 Holly in a semi-final; Katmai
-          discarded them (“our ballot box, too, has been stuffed”). The Wayback
-          Results tables show the cleaned totals, not the stuffed intermediate.
+          (~9k spam votes for Holly, discarded). On the public 2022–2026
+          numbers alone, though, I <strong>cannot prove</strong> fraud in the
+          2026 final — close races and midweek turnout dips also show up in
+          clean-looking years.
         </p>
-        <p>
-          So this page is the follow-through: year-over-year and within-year
-          pair totals (A+B per matchup), same-day missing votes, and turnout
-          shape vs each year’s opener — to see what looks like normal attention
-          cycles versus what looks anomalous.
-        </p>
+        <aside class="callout warning">
+          <strong>Bottom line</strong>
+          <p>
+            Suspicion stands; proof does not — at least not from these
+            published tallies. If anything irregular happened in 2026, we’ll
+            need Fat Bear Week / Katmai / explore.org to say so, the way they
+            did in 2022.
+          </p>
+        </aside>
       </header>
 
+      <section class="stats">
+        <article>
+          <strong>103,334</strong>
+          <span>Backpack (finals)</span>
+        </article>
+        <article>
+          <strong>98,253</strong>
+          <span>910 (finals)</span>
+        </article>
+        <article>
+          <strong>5,081</strong>
+          <span>Margin</span>
+        </article>
+        <article>
+          <strong>2022</strong>
+          <span>Only confirmed stuffing year</span>
+        </article>
+      </section>
+
       <aside class="callout danger">
-        <strong>Documented fraud: 2022 semi-final</strong>
+        <strong>Documented fraud: 2022 semi-final (context)</strong>
         <p>
           Official cleaned totals after discard: 747 37,940 vs Holly 30,430.
           Source:
           <a
             href="https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal"
             >The Guardian, 11 Oct 2022</a
-          >.
+          >. Shows stuffing can happen — and that organizers can detect and
+          publish corrections. No such report yet for 2026.
         </p>
       </aside>
-
-      <section class="stats">
-        <article>
-          <strong>2022</strong>
-          <span>Only confirmed stuffing year</span>
-        </article>
-        <article>
-          <strong>~9k</strong>
-          <span>Fake Holly votes removed</span>
-        </article>
-        <article>
-          <strong>16.4%</strong>
-          <span>Largest same-day gap (2026 open)</span>
-        </article>
-        <article>
-          <strong>2021→</strong>
-          <span>No raw table — start at 2022</span>
-        </article>
-      </section>
 
       <label class="view-row">
         <span>Chart view</span>
@@ -147,16 +176,22 @@
 
       <section class="two-col">
         <div class="card">
-          <h3>Fraud vs noise</h3>
+          <h3>What the data can and can’t say</h3>
           <p>
-            <strong>Confirmed (2022).</strong> Short-window spam for Holly;
-            discarded; 747 advanced. Public Wayback Results = official after
-            cleanup.
+            <strong>2026 finals suspicion.</strong> Backpack beat 910 by
+            5,081 votes. Close enough to raise an eyebrow — not close enough,
+            by itself, to prove stuffing.
           </p>
           <p>
-            <strong>Not automatically fraud.</strong> Midweek dips and finals
-            bounce recur every year. Same-day gaps usually &lt;10% on two-poll
-            days. 2026 open 16.4% fits four-poll abandonment.
+            <strong>What historical patterns show.</strong> Midweek dips and
+            finals rebounds recur. Same-day gaps usually stay modest on
+            two-poll days. 2022 proves fraud is possible — and that cleaned
+            Results pages won’t show the attack spike.
+          </p>
+          <p>
+            <strong>Waiting on organizers.</strong> Without a Fat Bear Week /
+            Katmai / explore.org report (like 2022), public tallies alone don’t
+            confirm 2026 fraud.
           </p>
         </div>
         <div class="card">
