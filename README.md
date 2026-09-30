@@ -1,36 +1,27 @@
 # Fat Bear Week Analysis
 
-Turnout and vote-integrity analysis for Fat Bear Week (2022–2026), using
-official Results tables archived on the Wayback Machine and the live
-[explore.org](https://explore.org/fat-bear-week) page for 2026.
+Turnout and vote-integrity analysis for Fat Bear Week (2022–2026).
 
-**Site:** https://garrypolley.github.io/fat-bear-week-analysis/  
-(Also listed by GitHub as http://garrypolley.com/fat-bear-week-analysis/ if the user Pages domain is active.)
+**Live site (mirrors the Cursor canvas):** https://garrypolley.github.io/fat-bear-week-analysis/
+
+Interactive twin also lives in Cursor as
+`canvas/fat-bear-week-voting.canvas.tsx` (same charts, year filter, sources).
 
 ## What’s here
 
 | Path | Contents |
 | --- | --- |
-| `index.html` | GitHub Pages charts + write-up |
-| `data/*_matchups.csv` | Per-year matchup tallies with Wayback `source_url` |
-| `data/matchups_all_years.csv` | Combined |
-| `data/daily_integrity.csv` | Same-day pair gaps |
-| `SOURCES.md` | Citations and verification links |
-| `data/external/reed_quest/` | Mirror of [Data@Reed Quest](https://github.com/data-at-reed-college/quest/tree/main/fat_bear_week) year-level CSVs |
+| `index.html` / `app.js` / `styles.css` | GitHub Pages — canvas twin |
+| `canvas/fat-bear-week-voting.canvas.tsx` | Cursor canvas source |
+| `data/*_matchups.csv` | Per-year matchup tallies + Wayback `source_url` |
+| `SOURCES.md` | Full citations |
 
-## Method (short)
+## Method
 
-- **Unit of analysis:** pair total (votes for bear A + bear B in one matchup).
-- **Same-day missing votes:** max pair − min pair that day.
-- **Vs opener index:** `100 × (day avg ÷ that year’s opening-day avg)`.
-- **YoY index:** `100 × (this year stage avg ÷ prior year same stage)`.
+- **Unit:** pair total (A + B votes in one matchup)
+- **Same-day gap:** max pair − min pair
+- **Vs opener:** `100 × (day avg ÷ opening-day avg)`
+- **YoY:** `100 × (this year stage ÷ prior year same stage)`
+- Bar series chronological: **2022 left → 2026 right**
 
-Documented fraud: 2022 Holly semi (~9k spam votes discarded) — see
-[Guardian](https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal).
-Archived Results pages show **post-discard** totals.
-
-## License
-
-Analysis and compiled CSVs: CC0 / public domain intent for the numbers
-(themselves published by explore.org / NPS). Site code: MIT if you need a
-label — do what you want.
+Documented fraud: 2022 Holly semi — [Guardian](https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal).
