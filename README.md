@@ -2,7 +2,9 @@
 
 Turnout and vote-integrity analysis for Fat Bear Week (2022–2026).
 
-**Live site (mirrors the Cursor canvas):** https://garrypolley.github.io/fat-bear-week-analysis/
+**Live site:** https://garrypolley.com/fat-bear-week-analysis/
+
+(Also mirrored from the analysis repo; GitHub Pages redirects project URLs to this custom-domain path.)
 
 Interactive twin also lives in Cursor as
 `canvas/fat-bear-week-voting.canvas.tsx` (same charts, year filter, sources).
