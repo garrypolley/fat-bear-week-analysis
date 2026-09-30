@@ -142,6 +142,18 @@ const FBW = "https://explore.org/fat-bear-week";
 const BACKPACK_IMG =
   "https://media.explore.org/documents/89-1789765144853.png";
 
+/** Finals winner−loser margins, chronological */
+const FINALS_YEARS = ["2022", "2023", "2024", "2025", "2026"] as const;
+const FINALS_MARGINS = [11229, 85187, 40780, 32625, 5081];
+const FINALS_MARGIN_PCT = [9.0, 64.8, 40.1, 20.4, 2.5];
+const FINALS_META = [
+  { year: "2022", winner: "747", loser: "901", w: 68105, l: 56876 },
+  { year: "2023", winner: "128 Grazer", loser: "32 Chunk", w: 108321, l: 23134 },
+  { year: "2024", winner: "128 Grazer", loser: "32 Chunk", w: 71248, l: 30468 },
+  { year: "2025", winner: "32 Chunk", loser: "856", w: 96350, l: 63725 },
+  { year: "2026", winner: "89 Backpack", loser: "910", w: 103334, l: 98253 },
+] as const;
+
 export default function FatBearWeekVoting() {
   const [view, setView] = useCanvasState<ViewKey>("yearView", "all");
   const isAll = view === "all";
@@ -255,6 +267,89 @@ export default function FatBearWeekVoting() {
       </Row>
 
       <Divider />
+
+      <Stack gap={8}>
+        <H2>Finals margins by year — winner vs loser</H2>
+        <Callout tone="info" title="What this shows">
+          Absolute vote gap (winner − loser) and that gap as % of the finals
+          pair total. Chronological: 2022 left → 2026 right.
+        </Callout>
+        <Grid columns={2} gap={16}>
+          <BarChart
+            categories={[...FINALS_YEARS]}
+            series={[
+              {
+                name: "Margin (votes)",
+                data: [...FINALS_MARGINS],
+                tone: "warning",
+              },
+            ]}
+            height={260}
+            showValues
+          />
+          <BarChart
+            categories={[...FINALS_YEARS]}
+            series={[
+              {
+                name: "Margin (% of pair)",
+                data: [...FINALS_MARGIN_PCT],
+                tone: "info",
+              },
+            ]}
+            height={260}
+            valueSuffix="%"
+            showValues
+          />
+        </Grid>
+        <Table
+          headers={[
+            "Year",
+            "Winner",
+            "Winner votes",
+            "Loser",
+            "Loser votes",
+            "Margin",
+            "% of pair",
+          ]}
+          columnAlign={[
+            "left",
+            "left",
+            "right",
+            "left",
+            "right",
+            "right",
+            "right",
+          ]}
+          rows={FINALS_META.map((r, i) => [
+            r.year,
+            r.winner,
+            fmt(r.w),
+            r.loser,
+            fmt(r.l),
+            fmt(FINALS_MARGINS[i]),
+            `${FINALS_MARGIN_PCT[i]}%`,
+          ])}
+          striped
+        />
+        <Callout tone="warning" title="What’s anomalous">
+          <Text>
+            <Text weight="semibold">2026 / Backpack</Text> is the clear
+            outlier on closeness: margin only 5,081 votes (2.5% of the
+            pair) — by far the thinnest final in this set. Next-closest is
+            2022 / 747 at ~9%.
+          </Text>
+          <Text>
+            <Text weight="semibold">2023 / Grazer</Text> is the opposite
+            outlier: a blowout (85,187 votes, ~65% of the pair) over Chunk.
+            2024 Grazer also wide (~40%). 2025 Chunk mid-pack (~20%).
+          </Text>
+          <Text>
+            A thin margin is suspicious-looking but not proof of fraud — it
+            can just mean a competitive final. Still, 2026 sits alone at the
+            bottom of the closeness scale.
+          </Text>
+        </Callout>
+      </Stack>
 
       <Stack gap={8}>
         <H2>

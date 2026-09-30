@@ -49,7 +49,11 @@ const GAPS = {
   },
 };
 
-let charts = { opener: null, yoy: null, gaps: null };
+const FINALS_YEARS = ["2022", "2023", "2024", "2025", "2026"];
+const FINALS_MARGINS = [11229, 85187, 40780, 32625, 5081];
+const FINALS_MARGIN_PCT = [9.0, 64.8, 40.1, 20.4, 2.5];
+
+let charts = { opener: null, yoy: null, gaps: null, marginVotes: null, marginPct: null };
 
 function guideLine(label, n) {
   return {
@@ -113,8 +117,49 @@ function destroyCharts() {
   });
 }
 
+function marginOptions(yTitle) {
+  const opts = baseOptions(yTitle);
+  opts.plugins.legend = { display: false };
+  return opts;
+}
+
+function renderMargins() {
+  const yearColors = FINALS_YEARS.map((y) => COLORS[y]);
+
+  charts.marginVotes = new Chart(document.getElementById("chartMarginVotes"), {
+    type: "bar",
+    data: {
+      labels: FINALS_YEARS,
+      datasets: [
+        {
+          label: "Margin (votes)",
+          data: FINALS_MARGINS,
+          backgroundColor: yearColors,
+        },
+      ],
+    },
+    options: marginOptions("Votes (winner − loser)"),
+  });
+
+  charts.marginPct = new Chart(document.getElementById("chartMarginPct"), {
+    type: "bar",
+    data: {
+      labels: FINALS_YEARS,
+      datasets: [
+        {
+          label: "Margin (% of pair)",
+          data: FINALS_MARGIN_PCT,
+          backgroundColor: yearColors,
+        },
+      ],
+    },
+    options: marginOptions("% of finals pair total"),
+  });
+}
+
 function render(view) {
   destroyCharts();
+  renderMargins();
   const isAll = view === "all";
   const years = isAll ? ["2022", "2023", "2024", "2025", "2026"] : [view];
 

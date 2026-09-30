@@ -121,6 +121,105 @@
       <hr />
 
       <section>
+        <h2>Finals margins by year — winner vs loser</h2>
+        <aside class="callout info">
+          <p>
+            <strong>What this shows:</strong> Absolute vote gap (winner −
+            loser) and that gap as % of the finals pair total. Chronological:
+            2022 left → 2026 right.
+          </p>
+        </aside>
+        <div class="chart-pair">
+          <div class="chart-frame">
+            <canvas id="chartMarginVotes"></canvas>
+          </div>
+          <div class="chart-frame">
+            <canvas id="chartMarginPct"></canvas>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top: 1rem">
+          <table>
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Winner</th>
+                <th>Winner votes</th>
+                <th>Loser</th>
+                <th>Loser votes</th>
+                <th>Margin</th>
+                <th>% of pair</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2022</td>
+                <td>747</td>
+                <td>68,105</td>
+                <td>901</td>
+                <td>56,876</td>
+                <td>11,229</td>
+                <td>9.0%</td>
+              </tr>
+              <tr>
+                <td>2023</td>
+                <td>128 Grazer</td>
+                <td>108,321</td>
+                <td>32 Chunk</td>
+                <td>23,134</td>
+                <td>85,187</td>
+                <td>64.8%</td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>128 Grazer</td>
+                <td>71,248</td>
+                <td>32 Chunk</td>
+                <td>30,468</td>
+                <td>40,780</td>
+                <td>40.1%</td>
+              </tr>
+              <tr>
+                <td>2025</td>
+                <td>32 Chunk</td>
+                <td>96,350</td>
+                <td>856</td>
+                <td>63,725</td>
+                <td>32,625</td>
+                <td>20.4%</td>
+              </tr>
+              <tr>
+                <td>2026</td>
+                <td>89 Backpack</td>
+                <td>103,334</td>
+                <td>910</td>
+                <td>98,253</td>
+                <td>5,081</td>
+                <td>2.5%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="callout warning" style="margin-top: 1rem">
+          <strong>What’s anomalous</strong>
+          <p>
+            <strong>2026 / Backpack</strong> is the clear outlier on
+            closeness: margin only 5,081 votes (2.5% of the pair) — by far the
+            thinnest final in this set. Next-closest is 2022 / 747 at ~9%.
+          </p>
+          <p>
+            <strong>2023 / Grazer</strong> is the opposite outlier: a blowout
+            (85,187 votes, ~65% of the pair) over Chunk. 2024 Grazer also wide
+            (~40%). 2025 Chunk mid-pack (~20%).
+          </p>
+          <p>
+            A thin margin is suspicious-looking but not proof of fraud — it
+            can just mean a competitive final. Still, 2026 sits alone at the
+            bottom of the closeness scale.
+          </p>
+        </aside>
+      </section>
+
+      <section>
         <h2 id="openerTitle">How busy vs opener (all years)</h2>
         <aside class="callout info">
           <p>

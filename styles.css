@@ -196,6 +196,17 @@ hr {
   margin: 0.55rem 0 0;
 }
 
+.chart-pair {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 800px) {
+  .chart-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .chart-frame {
   background: var(--bg-elev);
   border: 1px solid var(--line);
