@@ -4,7 +4,8 @@ Turnout and vote-integrity analysis for Fat Bear Week (2022–2026), using
 official Results tables archived on the Wayback Machine and the live
 [explore.org](https://explore.org/fat-bear-week) page for 2026.
 
-**Site:** https://garrypolley.github.io/fat-bear-week-analysis/
+**Site:** https://garrypolley.github.io/fat-bear-week-analysis/  
+(Also listed by GitHub as http://garrypolley.com/fat-bear-week-analysis/ if the user Pages domain is active.)
 
 ## What’s here
 
