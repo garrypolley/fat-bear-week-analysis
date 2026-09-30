@@ -164,10 +164,7 @@ export default function FatBearWeekVoting() {
     ? YOY_SERIES
     : year === "2022"
       ? []
-      : [
-          YOY_SERIES.find((s) => s.name.startsWith(year!)) ??
-            YOY_SERIES[0],
-        ].filter(Boolean);
+      : YOY_SERIES.filter((s) => s.name.startsWith(year!));
 
   return (
     <Stack gap={24} style={{ padding: 24, maxWidth: 1100 }}>
@@ -281,7 +278,7 @@ export default function FatBearWeekVoting() {
           </Text>
         </Stack>
       ) : (
-        <Callout tone="neutral" title="No YoY for 2022">
+        <Callout tone="info" title="No YoY for 2022">
           2022 is the first year with raw matchup tables here — nothing prior to
           compare against. Switch to All years or 2023+ for YoY bars.
         </Callout>
