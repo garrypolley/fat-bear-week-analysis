@@ -6,11 +6,9 @@
   --line: #2c3526;
   --accent: #c4a35a;
   --info: #6b9e8a;
-  --ok: #7fad6a;
   --warn: #c4924a;
   --danger: #c46a5a;
-  --neutral: #8a9080;
-  --max: 52rem;
+  --max: 68rem;
 }
 
 *,
@@ -26,36 +24,55 @@ html {
 body {
   margin: 0;
   font-family: "DM Sans", system-ui, sans-serif;
-  font-optical-sizing: auto;
   background: var(--bg);
   color: var(--ink);
   line-height: 1.55;
+}
+
+.canvas {
+  width: min(100% - 2rem, var(--max));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stack-tight {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stack-tight p {
+  margin: 0;
+  max-width: 46rem;
 }
 
 h1,
 h2,
 h3 {
   font-family: Literata, Georgia, serif;
-  font-optical-sizing: auto;
   font-weight: 700;
-  line-height: 1.2;
   letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
 }
 
 h1 {
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
-  margin: 0.2rem 0 0.75rem;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  margin-bottom: 0.25rem;
 }
 
 h2 {
-  font-size: 1.55rem;
-  margin: 0 0 0.75rem;
+  font-size: 1.4rem;
+  margin-bottom: 0.65rem;
 }
 
 h3 {
-  font-size: 1.1rem;
-  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
   color: var(--accent);
+  margin-bottom: 0.5rem;
 }
 
 a {
@@ -66,54 +83,16 @@ a:hover {
   color: var(--ink);
 }
 
-.hero,
-main,
-footer {
-  width: min(100% - 2rem, var(--max));
-  margin-inline: auto;
-}
-
-.hero {
-  padding: 3.5rem 0 2rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.eyebrow {
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-.lede {
-  font-size: 1.15rem;
-  max-width: 38rem;
-  color: var(--muted);
-  margin: 0 0 1.25rem;
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 0;
-}
-
-.links a {
-  font-weight: 500;
-}
-
-main {
-  padding: 2rem 0 4rem;
-  display: grid;
-  gap: 2.75rem;
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0.25rem 0;
 }
 
 .callout {
   border: 1px solid var(--line);
   background: var(--bg-elev);
-  padding: 1rem 1.15rem;
+  padding: 0.9rem 1.05rem;
   border-radius: 2px;
 }
 
@@ -125,9 +104,9 @@ main {
   border-color: color-mix(in srgb, var(--info) 45%, var(--line));
 }
 
-.callout h2 {
-  font-size: 1.15rem;
-  margin-bottom: 0.4rem;
+.callout strong {
+  display: block;
+  margin-bottom: 0.35rem;
 }
 
 .callout p {
@@ -145,7 +124,7 @@ main {
   gap: 0.75rem;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 800px) {
   .stats {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -154,32 +133,48 @@ main {
 .stats article {
   background: var(--bg-elev);
   border: 1px solid var(--line);
-  padding: 0.9rem 1rem;
+  padding: 0.85rem 1rem;
 }
 
 .stats strong {
   display: block;
   font-family: Literata, Georgia, serif;
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   color: var(--accent);
 }
 
 .stats span {
   display: block;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+}
+
+.view-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.view-row select {
+  background: var(--bg-elev);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 0.45rem 0.65rem;
+  font: inherit;
+  min-width: 14rem;
 }
 
 .hint {
   color: var(--muted);
-  margin: 0 0 1rem;
+  margin: 0 0 0.85rem;
 }
 
 .caption {
   color: var(--muted);
   font-size: 0.85rem;
-  margin: 0.65rem 0 0;
+  margin: 0.55rem 0 0;
 }
 
 .chart-frame {
@@ -220,28 +215,35 @@ th {
 
 .two-col {
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 @media (min-width: 800px) {
   .two-col {
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 }
 
-.two-col p {
-  color: var(--muted);
-  margin: 0 0 1rem;
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  padding: 1rem 1.1rem;
 }
 
-footer {
-  border-top: 1px solid var(--line);
-  padding: 1.5rem 0 3rem;
+.card p {
   color: var(--muted);
-  font-size: 0.9rem;
+  margin: 0 0 0.85rem;
 }
 
-footer p {
-  margin: 0;
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.sources {
+  padding-top: 0.25rem;
+}
+
+[hidden] {
+  display: none !important;
 }

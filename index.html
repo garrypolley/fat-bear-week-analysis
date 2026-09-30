@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fat Bear Week — turnout &amp; vote integrity</title>
+    <title>Fat Bear Week — looking for vote fraud</title>
     <meta
       name="description"
-      content="Per-matchup turnout and vote-integrity signals for Fat Bear Week 2022–2026, sourced from explore.org and Wayback Machine."
+      content="Turnout and vote-integrity analysis for Fat Bear Week 2022–2026. Pair totals from explore.org / Wayback."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,33 +18,45 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   </head>
   <body>
-    <header class="hero">
-      <p class="eyebrow">explore.org · Wayback · 2022–2026</p>
-      <h1>Fat Bear Week</h1>
-      <p class="lede">
-        How busy was each voting day — and did anything look like ballot
-        stuffing? Pair totals only (one matchup = one turnout unit).
-      </p>
-      <p class="links">
-        <a href="SOURCES.md">Sources</a>
-        <a href="https://github.com/garrypolley/fat-bear-week-analysis">GitHub</a>
-        <a href="data/matchups_all_years.csv">All matchups CSV</a>
-      </p>
-    </header>
-
-    <main>
-      <section class="callout danger">
-        <h2>Documented fraud: 2022 semi-final</h2>
+    <main class="canvas">
+      <header class="stack-tight">
+        <h1>Fat Bear Week — looking for vote fraud</h1>
         <p>
-          Per
+          I started from a suspicion: looking at Fat Bear Week totals, something
+          felt off — turnout swinging hard midweek, then snapping back for
+          finals. That pattern made me wonder whether vote stuffing (or other
+          ballot issues) might be hiding in the numbers.
+        </p>
+        <p>
+          Digging in, I found organizers had already caught real fraud in 2022.
+          The
           <a
             href="https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal"
-            >The Guardian</a
-          >: ~9,000 spam votes for 435 Holly discarded. Official cleaned
-          totals (on the Wayback results page): 747&nbsp;37,940 vs Holly
-          30,430. Katmai: “our ballot box, too, has been stuffed.”
+            >Guardian</a
+          >
+          reported ~9,000 spam votes for 435 Holly in a semi-final; Katmai
+          discarded them (“our ballot box, too, has been stuffed”). The Wayback
+          Results tables show the cleaned totals, not the stuffed intermediate.
         </p>
-      </section>
+        <p>
+          So this page is the follow-through: year-over-year and within-year
+          pair totals (A+B per matchup), same-day missing votes, and turnout
+          shape vs each year’s opener — to see what looks like normal attention
+          cycles versus what looks anomalous.
+        </p>
+      </header>
+
+      <aside class="callout danger">
+        <strong>Documented fraud: 2022 semi-final</strong>
+        <p>
+          Official cleaned totals after discard: 747 37,940 vs Holly 30,430.
+          Source:
+          <a
+            href="https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal"
+            >The Guardian, 11 Oct 2022</a
+          >.
+        </p>
+      </aside>
 
       <section class="stats">
         <article>
@@ -57,34 +69,193 @@
         </article>
         <article>
           <strong>16.4%</strong>
-          <span>Largest same-day gap (2026 open, 4 polls)</span>
+          <span>Largest same-day gap (2026 open)</span>
         </article>
         <article>
-          <strong>2021</strong>
-          <span>No raw table — analysis starts 2022</span>
+          <strong>2021→</strong>
+          <span>No raw table — start at 2022</span>
         </article>
       </section>
 
+      <label class="view-row">
+        <span>Chart view</span>
+        <select id="yearView" aria-label="Chart view year filter">
+          <option value="all">All years (2022–2026)</option>
+          <option value="2022">2022 only</option>
+          <option value="2023">2023 only</option>
+          <option value="2024">2024 only</option>
+          <option value="2025">2025 only</option>
+          <option value="2026">2026 only</option>
+        </select>
+      </label>
+
+      <hr />
+
       <section>
-        <h2>Wayback sources</h2>
-        <p class="hint">Click a snapshot to verify the Results table yourself.</p>
+        <h2 id="openerTitle">How busy vs opener (all years)</h2>
+        <aside class="callout info">
+          <p>
+            <strong>How to read:</strong> Not raw counts. Each year scaled so
+            its own opening-day average pair total = 100. Later stages = % of
+            that opener. Guide line at 100 = same as opener. Grouped bars are
+            chronological: <strong>2022 left → 2026 right</strong>.
+          </p>
+        </aside>
+        <div class="chart-frame">
+          <canvas id="chartVsOpener"></canvas>
+        </div>
+        <p class="caption">index = 100 × (day avg ÷ opening-day avg)</p>
+      </section>
+
+      <section id="yoySection">
+        <h2 id="yoyTitle">Year-over-year vs prior year</h2>
+        <aside class="callout info">
+          <p>
+            <strong>How to read:</strong> At each stage: this year ÷ prior year
+            same stage. 100 = flat YoY. Bars left→right chronological (2023 vs
+            2022 first).
+          </p>
+        </aside>
+        <div class="chart-frame">
+          <canvas id="chartYoY"></canvas>
+        </div>
+        <p class="caption">
+          2025 Mid vs 2024 Mid (~255) is huge mainly because 2024 Mid was a
+          deep trough (~50k), not because 2025 Mid was absurd (~128k).
+        </p>
+      </section>
+
+      <aside class="callout info" id="yoyEmpty" hidden>
+        <strong>No YoY for 2022</strong>
+        <p>
+          2022 is the first year with raw matchup tables here — nothing prior
+          to compare against. Switch to All years or 2023+ for YoY bars.
+        </p>
+      </aside>
+
+      <section>
+        <h2 id="gapTitle">Same-day missing votes (all dates, oldest → newest)</h2>
+        <p class="hint">
+          Gap = max pair − min pair that day, as % of max. Dates run left →
+          right chronologically. High gap can mean poll abandonment; alone ≠
+          stuffing.
+        </p>
+        <div class="chart-frame chart-frame--tall">
+          <canvas id="chartGaps"></canvas>
+        </div>
+      </section>
+
+      <section class="two-col">
+        <div class="card">
+          <h3>Fraud vs noise</h3>
+          <p>
+            <strong>Confirmed (2022).</strong> Short-window spam for Holly;
+            discarded; 747 advanced. Public Wayback Results = official after
+            cleanup.
+          </p>
+          <p>
+            <strong>Not automatically fraud.</strong> Midweek dips and finals
+            bounce recur every year. Same-day gaps usually &lt;10% on two-poll
+            days. 2026 open 16.4% fits four-poll abandonment.
+          </p>
+        </div>
+        <div class="card">
+          <h3>2022 Oct 9 math check</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Version</th>
+                  <th>747</th>
+                  <th>Holly</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Archived official</td>
+                  <td>37,940</td>
+                  <td>30,430</td>
+                </tr>
+                <tr>
+                  <td>Implied pre-discard (~+9k Holly)</td>
+                  <td>37,940</td>
+                  <td>~39,430</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="caption">
+            Implication only — Guardian states ~9,000; pre-discard dump not on
+            Results page.
+          </p>
+        </div>
+      </section>
+
+      <hr />
+
+      <section class="sources">
+        <h2>Sources &amp; files</h2>
+        <p class="hint">
+          Secondary detail for verification. Primary story is above; links and
+          file paths live here.
+        </p>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Year</th>
-                <th>Results page</th>
-                <th>Local CSV</th>
+                <th>Results snapshot</th>
+                <th>Repo CSV</th>
                 <th>Sum vs Total</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>2026</td>
+                <td>2022</td>
                 <td>
-                  <a href="https://explore.org/fat-bear-week">live explore.org</a>
+                  <a
+                    href="https://web.archive.org/web/20221201003358/https://www.explore.org/fat-bear-week"
+                    >20221201003358</a
+                  >
                 </td>
-                <td><a href="data/2026_matchups.csv">2026_matchups.csv</a></td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/2022_matchups.csv"
+                    >data/2022_matchups.csv</a
+                  >
+                </td>
+                <td>exact (post-discard)</td>
+              </tr>
+              <tr>
+                <td>2023</td>
+                <td>
+                  <a
+                    href="https://web.archive.org/web/20231201135955/https://www.explore.org/fat-bear-week"
+                    >20231201135955</a
+                  >
+                </td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/2023_matchups.csv"
+                    >data/2023_matchups.csv</a
+                  >
+                </td>
+                <td>+178</td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>
+                  <a
+                    href="https://web.archive.org/web/20241031053258/https://explore.org/fat-bear-week"
+                    >20241031053258</a
+                  >
+                </td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/2024_matchups.csv"
+                    >data/2024_matchups.csv</a
+                  >
+                </td>
                 <td>exact</td>
               </tr>
               <tr>
@@ -95,194 +266,120 @@
                     >20251001014537</a
                   >
                 </td>
-                <td><a href="data/2025_matchups.csv">2025_matchups.csv</a></td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/2025_matchups.csv"
+                    >data/2025_matchups.csv</a
+                  >
+                </td>
                 <td>−1,016</td>
               </tr>
               <tr>
-                <td>2024</td>
+                <td>2026</td>
+                <td>
+                  <a href="https://explore.org/fat-bear-week">live explore.org</a>
+                </td>
                 <td>
                   <a
-                    href="https://web.archive.org/web/20241031053258/https://explore.org/fat-bear-week"
-                    >20241031053258</a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/2026_matchups.csv"
+                    >data/2026_matchups.csv</a
                   >
                 </td>
-                <td><a href="data/2024_matchups.csv">2024_matchups.csv</a></td>
                 <td>exact</td>
-              </tr>
-              <tr>
-                <td>2023</td>
-                <td>
-                  <a
-                    href="https://web.archive.org/web/20231201135955/https://www.explore.org/fat-bear-week"
-                    >20231201135955</a
-                  >
-                </td>
-                <td><a href="data/2023_matchups.csv">2023_matchups.csv</a></td>
-                <td>+178</td>
-              </tr>
-              <tr>
-                <td>2022</td>
-                <td>
-                  <a
-                    href="https://web.archive.org/web/20221201003358/https://www.explore.org/fat-bear-week"
-                    >20221201003358</a
-                  >
-                </td>
-                <td><a href="data/2022_matchups.csv">2022_matchups.csv</a></td>
-                <td>exact (post-discard)</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </section>
-
-      <section>
-        <h2>How busy vs that year’s opener?</h2>
-        <div class="callout info">
-          <p>
-            <strong>How to read:</strong> Not raw vote counts. Each year is
-            scaled so its own opening-day average pair total = 100. Later
-            stages are “% of that opener.” Horizontal guide = same as opener.
-            Above 100 = busier than day&nbsp;1; below = quieter.
-          </p>
-        </div>
-        <p class="hint">
-          Y-axis: index (opener = 100). X-axis: stage of the week (aligned
-          across years, not the same calendar dates).
-        </p>
-        <div class="chart-frame">
-          <canvas id="chartVsOpener" aria-label="Grouped bar chart of turnout vs opener by year"></canvas>
-        </div>
-        <p class="caption">
-          index = 100 × (day avg ÷ opening-day avg) · Source: data/*_matchups.csv
-        </p>
-      </section>
-
-      <section>
-        <h2>Year-over-year: same stage vs prior year</h2>
-        <div class="callout info">
-          <p>
-            <strong>How to read:</strong> Different question. Each bar =
-            this year’s avg pair ÷ <em>last year’s same stage</em>. Guide at
-            100 = flat YoY. 130 ≈ 30% busier than prior year; 70 ≈ 30% quieter.
-            No 2022 series (nothing to compare against).
-          </p>
-        </div>
-        <div class="chart-frame">
-          <canvas id="chartYoY" aria-label="Grouped bar chart of year-over-year turnout by stage"></canvas>
-        </div>
-        <p class="caption">
-          2025 Mid vs 2024 Mid (~255) looks huge mainly because 2024 Mid was
-          an unusually quiet trough (~50k), not because 2025 Mid was absurdly
-          high (~128k).
-        </p>
-        <div class="table-wrap">
+        <div class="table-wrap" style="margin-top: 1rem">
           <table>
             <thead>
               <tr>
-                <th>Step</th>
-                <th>Story</th>
+                <th>File / page</th>
+                <th>Link</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>2023 vs 2022</td>
-                <td>Bigger at every stage (post-scandal year still grew)</td>
+                <td>Repository</td>
+                <td>
+                  <a href="https://github.com/garrypolley/fat-bear-week-analysis"
+                    >github.com/garrypolley/fat-bear-week-analysis</a
+                  >
+                </td>
               </tr>
               <tr>
-                <td>2024 vs 2023</td>
-                <td>Down across the board (~67–78% of 2023)</td>
+                <td>SOURCES.md</td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/SOURCES.md"
+                    >SOURCES.md</a
+                  >
+                </td>
               </tr>
               <tr>
-                <td>2025 vs 2024</td>
-                <td>Strong rebound; Mid extreme mainly vs 2024’s trough</td>
+                <td>All matchups</td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/matchups_all_years.csv"
+                    >data/matchups_all_years.csv</a
+                  >
+                </td>
               </tr>
               <tr>
-                <td>2026 vs 2025</td>
-                <td>Opener/Finals up ~26–30%; Day2 a bit softer than 2025</td>
+                <td>Daily integrity gaps</td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/data/daily_integrity.csv"
+                    >data/daily_integrity.csv</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Cursor canvas source</td>
+                <td>
+                  <a
+                    href="https://github.com/garrypolley/fat-bear-week-analysis/blob/main/canvas/fat-bear-week-voting.canvas.tsx"
+                    >canvas/fat-bear-week-voting.canvas.tsx</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Guardian 2022 scandal</td>
+                <td>
+                  <a
+                    href="https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal"
+                    >theguardian.com/…/alaska-fat-bear-week-voting-scandal</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Hall of Champions</td>
+                <td>
+                  <a href="https://explore.org/hall-of-champions"
+                    >explore.org/hall-of-champions</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Reed Quest CSVs (year-level)</td>
+                <td>
+                  <a
+                    href="https://github.com/data-at-reed-college/quest/tree/main/fat_bear_week/data"
+                    >data-at-reed-college/quest/…/fat_bear_week/data</a
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-      </section>
-
-      <section>
-        <h2>Same-day missing votes</h2>
-        <p class="hint">
-          Gap = max pair − min pair that day, as % of max. High gap can mean
-          poll abandonment. Alone ≠ stuffing. 2022 fraud was a short-time
-          spam burst; cleaned archive does not show the intermediate spike.
-        </p>
-        <div class="chart-frame chart-frame--tall">
-          <canvas id="chartGaps" aria-label="Bar chart of same-day vote gaps by day"></canvas>
-        </div>
         <p class="caption">
-          Only multi-poll main-bracket days. Dashed line = 10% flag. Sole day
-          above 10% in this set: 2026-09-23 (four polls).
+          Unit of analysis = pair total (votes A + votes B). explore.org does
+          not publish a matchup CSV; tables transcribed from live / Wayback
+          Results HTML. 2021 Wayback snapshot has no raw matchup table. This
+          page mirrors the Cursor canvas analysis.
         </p>
-      </section>
-
-      <section>
-        <h2>Fraud vs noise</h2>
-        <div class="two-col">
-          <div>
-            <h3>Confirmed (2022)</h3>
-            <p>
-              Organizers caught ~9k votes in a short window for Holly,
-              discarded them, 747 advanced. Public Wayback Results =
-              official <em>after</em> cleanup.
-            </p>
-            <h3>Not automatically fraud</h3>
-            <p>
-              Midweek turnout dips (common every year). Same-day gaps under
-              ~10% on two-poll days. Finals rebound. 2026 opening 16% gap
-              fits four-poll abandonment.
-            </p>
-          </div>
-          <div>
-            <h3>2022 Oct 9 math check</h3>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Version</th>
-                    <th>747</th>
-                    <th>Holly</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Archived official</td>
-                    <td>37,940</td>
-                    <td>30,430</td>
-                  </tr>
-                  <tr>
-                    <td>Implied pre-discard (~+9k Holly)</td>
-                    <td>37,940</td>
-                    <td>~39,430</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="caption">
-              Implication only — Guardian states ~9,000; exact pre-discard
-              dump not on Results page.
-            </p>
-          </div>
-        </div>
       </section>
     </main>
-
-    <footer>
-      <p>
-        Data from
-        <a href="https://explore.org/fat-bear-week">explore.org</a> via
-        Wayback where noted. Analysis by
-        <a href="https://github.com/garrypolley">garrypolley</a>. Full
-        citations in <a href="SOURCES.md">SOURCES.md</a>.
-      </p>
-    </footer>
-
     <script src="app.js"></script>
   </body>
 </html>
