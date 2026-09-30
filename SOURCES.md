@@ -12,6 +12,10 @@ tables so anyone can verify. Live page overwrites each year.
 Archived Oct 9, 2022 semi totals on the Wayback results page are the **post-discard**
 official numbers (747: 37,940; 435 Holly: 30,430), not the stuffed intermediate tally.
 
+Scale check vs 2026 finals: Guardian ~9,000 spam > 2026 margin 5,081 absolute;
+~11.6–13.2% of the 2022 semi pair vs 2.5% margin of the 2026 finals pair
+(201,587). Same ~9k would be ~4.5% of that 2026 pair — enough to flip the race.
+
 ## Wayback Machine — matchup results (verify here)
 
 | Year | Wayback snapshot | Local CSV | Sum of pairs | Published Total | Delta |

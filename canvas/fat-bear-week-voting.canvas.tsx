@@ -154,6 +154,13 @@ const FINALS_META = [
   { year: "2026", winner: "89 Backpack", loser: "910", w: 103334, l: 98253 },
 ] as const;
 
+/** 2022 Holly spam (Guardian ~9k) vs 2026 finals margin — validated from CSVs */
+const SPAM_2022 = 9000;
+const SEMI_2022_POST_PAIR = 37940 + 30430; // 68,370 cleaned
+const SEMI_2022_PRE_PAIR = SEMI_2022_POST_PAIR + SPAM_2022; // 77,370 implied
+const FINALS_2026_PAIR = 103334 + 98253; // 201,587
+const FINALS_2026_MARGIN = 5081;
+
 export default function FatBearWeekVoting() {
   const [view, setView] = useCanvasState<ViewKey>("yearView", "all");
   const isAll = view === "all";
@@ -228,8 +235,11 @@ export default function FatBearWeekVoting() {
         </Text>
         <Callout tone="warning" title="Bottom line">
           Suspicion stands; proof does not — at least not from these published
-          tallies. If anything irregular happened in 2026, we’ll need Fat Bear
-          Week / Katmai / explore.org to say so, the way they did in 2022.
+          tallies. But 2022’s ~9k discarded spam already exceeds the 2026
+          margin in votes and as a share of its matchup. Given that precedent
+          and this year’s razor-thin final, Fat Bear Week / Katmai /
+          explore.org should recount and analyze the 2026 finals votes and
+          publish what they find — the way they did in 2022.
         </Callout>
       </Stack>
 
@@ -241,13 +251,16 @@ export default function FatBearWeekVoting() {
       </Grid>
 
       <Callout tone="danger" title="Documented fraud: 2022 semi-final (context)">
-        Official cleaned totals after discard: 747 37,940 vs Holly 30,430.
-        Source:{" "}
+        Official cleaned totals after discard: 747 37,940 vs Holly 30,430
+        (pair {fmt(SEMI_2022_POST_PAIR)}). Guardian: ~{fmt(SPAM_2022)} fake
+        Holly votes discarded — larger than the entire 2026 finals margin (
+        {fmt(FINALS_2026_MARGIN)} / 2.5% of pair). Source:{" "}
         <Link href="https://www.theguardian.com/us-news/2022/oct/11/alaska-fat-bear-week-voting-scandal">
           The Guardian, 11 Oct 2022
         </Link>
-        . Shows stuffing can happen — and that organizers can detect and
-        publish corrections. No such report yet for 2026.
+        . Organizers can detect stuffing and publish corrections. No such
+        report yet for 2026 — and this year’s final is thin enough that spam
+        of that size would have flipped it.
       </Callout>
 
       <Row gap={12} align="center">
@@ -348,6 +361,56 @@ export default function FatBearWeekVoting() {
             can just mean a competitive final. Still, 2026 sits alone at the
             bottom of the closeness scale.
           </Text>
+        </Callout>
+        <Callout tone="danger" title="2022 spam vs 2026 margin — why a recount is warranted">
+          <Text>
+            Documented 2022 Holly stuffing was ~{fmt(SPAM_2022)} fake votes
+            (Guardian). 2026 finals margin is only {fmt(FINALS_2026_MARGIN)} on
+            a pair of {fmt(FINALS_2026_PAIR)} (~2.5%). Absolute: ~
+            {fmt(SPAM_2022)} &gt; {fmt(FINALS_2026_MARGIN)} by ~
+            {fmt(SPAM_2022 - FINALS_2026_MARGIN)} votes (~1.8× the margin).
+          </Text>
+          <Text>
+            As a share of the matchup: ~9k was ~
+            {((100 * SPAM_2022) / SEMI_2022_POST_PAIR).toFixed(1)}% of the
+            cleaned 2022 semi pair ({fmt(SEMI_2022_POST_PAIR)}) / ~
+            {((100 * SPAM_2022) / SEMI_2022_PRE_PAIR).toFixed(1)}% of the
+            implied pre-discard pair ({fmt(SEMI_2022_PRE_PAIR)}). Drop that
+            same ~9k onto the 2026 finals pair and it is still ~
+            {((100 * SPAM_2022) / FINALS_2026_PAIR).toFixed(1)}% — larger than
+            the 2.5% winning margin. Spam of that size would have flipped
+            Backpack vs 910.
+          </Text>
+          <Text>
+            Given how close 2026 was, and that organizers already found and
+            discarded stuffing once, Fat Bear Week / Katmai / explore.org
+            should re-check and analyze the 2026 finals ballots — same
+            integrity pass they ran in 2022 — and publish what they find.
+            Public tallies alone still do not prove 2026 fraud; they do show
+            the race is thin enough that known past spam would have decided it.
+          </Text>
+          <Table
+            headers={["Compare", "Votes", "% of pair"]}
+            columnAlign={["left", "right", "left"]}
+            rows={[
+              [
+                "2022 Holly spam (Guardian ~9k)",
+                `~${fmt(SPAM_2022)}`,
+                `~${((100 * SPAM_2022) / SEMI_2022_PRE_PAIR).toFixed(1)}–${((100 * SPAM_2022) / SEMI_2022_POST_PAIR).toFixed(1)}% of 2022 semi`,
+              ],
+              [
+                "2026 finals margin (Backpack − 910)",
+                fmt(FINALS_2026_MARGIN),
+                `${((100 * FINALS_2026_MARGIN) / FINALS_2026_PAIR).toFixed(1)}% of ${fmt(FINALS_2026_PAIR)}`,
+              ],
+              [
+                "~9k spam as % of 2026 finals pair",
+                `~${fmt(SPAM_2022)}`,
+                `~${((100 * SPAM_2022) / FINALS_2026_PAIR).toFixed(1)}% of ${fmt(FINALS_2026_PAIR)}`,
+              ],
+            ]}
+            striped
+          />
         </Callout>
       </Stack>
 
